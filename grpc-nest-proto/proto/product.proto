@@ -9,7 +9,7 @@ service ProductService {
 }
 
 message ProductData {
-    int32 id = 1;
+    string id = 1;
     string name = 2;
     string sku = 3;
     int32 stock = 4;
@@ -27,16 +27,16 @@ message CreateProductRequest {
 message CreateProductResponse {
     int32 status = 1;
     repeated string error = 2;
-    int32 id = 3;
+    string id = 3;
 }
 
 // FindOne
 message FindOneRequest {
-    int32 id = 1;
+    string id = 1;
 }
 
 message FindOneResponse {
-    int32 status = 1;
+    string status = 1;
     repeated string error = 2;
     ProductData data = 3;
 }
@@ -64,7 +64,7 @@ message FindAllResponse {
 
 // FindByShop
 message FindByShopRequest {
-    int32 shopId = 1;
+    string shopId = 1;
     int32 page = 2;
     int32 limit = 3;
 }
@@ -78,7 +78,7 @@ message FindByShopResponse {
 
 // UpdateProduct
 message UpdateProductRequest {
-  int32 id = 1;
+  string id = 1;
   string name = 2;
   string sku = 3;
   int32 stock = 4;
@@ -92,7 +92,7 @@ message UpdateProductResponse {
 
 // DeleteProduct
 message DeleteProductRequest {
-  int32 id = 1;
+  string id = 1;
 }
 
 message DeleteProductResponse {
@@ -103,7 +103,7 @@ message DeleteProductResponse {
 // DecreaseStock
 
 message DecreaseStockRequest {
-  int32 id = 1;
+  string id = 1;
 }
 
 message DecreaseStockResponse {
