@@ -10,6 +10,15 @@ service UserService {
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
 }
 
+message Address {
+  string street = 1;
+  string city = 2;
+  string state = 3;
+  string postalCode = 4;
+  string country = 5;
+  bool isDefault = 6;
+}
+
 message UserData {
   string id = 1;
   string email = 2;
@@ -18,7 +27,10 @@ message UserData {
   string phoneNumber = 5;
   string gender = 6;
   string avatar = 7;
+  repeated Address addresses = 8;
 }
+
+
 
 // CreateUser
 message CreateUserRequest {
