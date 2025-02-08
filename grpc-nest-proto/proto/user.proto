@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package user;
+
+service UserService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+  rpc FindOne(FindOneRequest) returns (FindOneResponse) {}
+  rpc FindAll(stream FindAllRequest) returns (stream FindAllResponse) {}
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+}
+
+message UserData {
+  string id = 1;
+  string email = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string phoneNumber = 5;
+  string gender = 6;
+  string avatar = 7;
+}
+
+// CreateUser
+message CreateUserRequest {
+  string email = 1;
+  string password = 2;
+  string firstName = 3;
+  string lastName = 4;
+}
+
+message CreateUserResponse {
+  int32 status = 1;
+  repeated string error = 2;
+  string id = 3;
+}
+
+// FindOne
+message FindOneRequest {
+  string id = 1;
+}
+
+message FindOneResponse {
+  int32 status = 1;
+  repeated string error = 2;
+  UserData data = 3;
+}
+
+// FindAll
+message FindAllRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message FindAllResponse {
+  int32 status = 1;
+  repeated string error = 2;
+  repeated UserData data = 3;
+  int32 total = 4;
+}
+
+// Update user
+message UpdateUserRequest {
+  string id = 1;
+  string email = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string phoneNumber = 5;
+}
+
+message UpdateUserResponse {
+  int32 status = 1;
+  repeated string error = 2;
+}
+
+// Delete user
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message DeleteUserResponse {
+  int32 status = 1;
+  repeated string error = 2;
+}

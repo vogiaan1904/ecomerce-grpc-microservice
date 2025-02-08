@@ -14,6 +14,8 @@ export const protobufPackage = "auth";
 export interface RegisterRequest {
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface RegisterResponse {
@@ -30,7 +32,51 @@ export interface LoginRequest {
 export interface LoginResponse {
   status: number;
   error: string[];
+  accessToken: string;
+  refreshToken: string;
+}
+
+/** Refresh token */
+export interface RefreshTokenRequest {
+  refreshToken: string;
+}
+
+export interface RefreshTokenResponse {
+  status: number;
+  error: string[];
+  accessToken: string;
+  refreshToken: string;
+}
+
+/** Send verification email */
+export interface SendVerificationEmailRequest {
+  email: string;
+}
+
+export interface SendVerificationEmailResponse {
+  status: number;
+  error: string[];
+}
+
+/** Forgot password */
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  status: number;
+  error: string[];
+}
+
+/** Reset password */
+export interface ResetPasswordRequest {
   token: string;
+  password: string;
+}
+
+export interface ResetPasswordResponse {
+  status: number;
+  error: string[];
 }
 
 /** Validate */
@@ -52,6 +98,14 @@ export interface AuthServiceClient {
   login(request: LoginRequest): Observable<LoginResponse>;
 
   validate(request: ValidateRequest): Observable<ValidateResponse>;
+
+  refreshToken(request: RefreshTokenRequest): Observable<RefreshTokenResponse>;
+
+  sendVerificationEmail(request: SendVerificationEmailRequest): Observable<SendVerificationEmailResponse>;
+
+  forgotPassword(request: ForgotPasswordRequest): Observable<ForgotPasswordResponse>;
+
+  resetPassword(request: ResetPasswordRequest): Observable<ResetPasswordResponse>;
 }
 
 export interface AuthServiceController {
@@ -60,11 +114,35 @@ export interface AuthServiceController {
   login(request: LoginRequest): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
 
   validate(request: ValidateRequest): Promise<ValidateResponse> | Observable<ValidateResponse> | ValidateResponse;
+
+  refreshToken(
+    request: RefreshTokenRequest,
+  ): Promise<RefreshTokenResponse> | Observable<RefreshTokenResponse> | RefreshTokenResponse;
+
+  sendVerificationEmail(
+    request: SendVerificationEmailRequest,
+  ): Promise<SendVerificationEmailResponse> | Observable<SendVerificationEmailResponse> | SendVerificationEmailResponse;
+
+  forgotPassword(
+    request: ForgotPasswordRequest,
+  ): Promise<ForgotPasswordResponse> | Observable<ForgotPasswordResponse> | ForgotPasswordResponse;
+
+  resetPassword(
+    request: ResetPasswordRequest,
+  ): Promise<ResetPasswordResponse> | Observable<ResetPasswordResponse> | ResetPasswordResponse;
 }
 
 export function AuthServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["register", "login", "validate"];
+    const grpcMethods: string[] = [
+      "register",
+      "login",
+      "validate",
+      "refreshToken",
+      "sendVerificationEmail",
+      "forgotPassword",
+      "resetPassword",
+    ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("AuthService", method)(constructor.prototype[method], method, descriptor);
