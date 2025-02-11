@@ -36,6 +36,7 @@ export interface CreateUserRequest {
   password: string;
   firstName: string;
   lastName: string;
+  gender: string;
 }
 
 export interface CreateUserResponse {
@@ -71,10 +72,10 @@ export interface FindAllResponse {
 /** Update user */
 export interface UpdateUserRequest {
   id: string;
-  email: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  avatar: string;
 }
 
 export interface UpdateUserResponse {

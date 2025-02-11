@@ -5,9 +5,10 @@ import { AuthModule } from './services/auth/auth.module';
 import { ProductModule } from './services/product/product.module';
 import { OrderModule } from './services/order/order.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { UserModule } from './services/user/user.module';
 
 @Module({
-  imports: [AuthModule, ProductModule, OrderModule],
+  imports: [AuthModule, ProductModule, OrderModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

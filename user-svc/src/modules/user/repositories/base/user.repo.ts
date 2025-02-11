@@ -1,5 +1,5 @@
-import { User, UserDocument } from '../../entities/user.entity';
-import { UserRepositoryInterface } from '../..//interfaces/user.interface';
+import { User, UserDocument } from '../../../../entities/user.entity';
+import { UserRepositoryInterface } from '../../interfaces/user.interface';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, PaginateModel } from 'mongoose';

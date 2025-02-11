@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
 import { Address, AddressSchema } from './address.entity';
 import { BaseEntity } from './base.entity';
-import * as mongoosePaginate from 'mongoose-paginate-v2';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -58,4 +58,17 @@ export class User extends BaseEntity {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+// Ensure virtuals are included when converting to JSON or a plain object.
+UserSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: (_, ret) => {
+    delete ret._id;
+  },
+});
 UserSchema.plugin(mongoosePaginate);

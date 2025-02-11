@@ -1,6 +1,6 @@
-import { BaseEntity } from 'src/user/entities/base.entity';
+import { BaseEntity } from 'src/entities/base.entity';
 import { FilterQuery, Model, QueryOptions } from 'mongoose';
-import { FindAllResponse } from 'src/user/types/common.type';
+import { FindAllResponse } from 'src/modules/user/types/common.type';
 import { BaseRepositoryInterface } from './base.interface.repo';
 
 export abstract class BaseRepositoryAbstract<T extends BaseEntity>

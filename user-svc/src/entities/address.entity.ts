@@ -5,17 +5,17 @@ import { HydratedDocument } from 'mongoose';
 export type AddressDocument = HydratedDocument<Address>;
 
 export class Address extends BaseEntity {
-  @Prop({ minlength: 2, maxlength: 120 })
-  street?: string;
+  @Prop({ required: false, minlength: 2, maxlength: 120 })
+  street: string;
 
   @Prop({ required: true, minlength: 2, maxlength: 50 })
   city: string;
 
-  @Prop({ required: true, minlength: 2, maxlength: 50 })
+  @Prop({ required: false, minlength: 2, maxlength: 50 })
   state: string;
 
   @Prop({ required: false, minlength: 2, maxlength: 50 })
-  postalCode?: string;
+  postalCode: string;
 
   @Prop({ required: true, minlength: 2, maxlength: 50 })
   country: string;

@@ -38,6 +38,7 @@ message CreateUserRequest {
   string password = 2;
   string firstName = 3;
   string lastName = 4;
+  string gender = 5;
 }
 
 message CreateUserResponse {
@@ -73,10 +74,10 @@ message FindAllResponse {
 // Update user
 message UpdateUserRequest {
   string id = 1;
-  string email = 2;
   string firstName = 3;
   string lastName = 4;
   string phoneNumber = 5;
+  string avatar = 6;
 }
 
 message UpdateUserResponse {
