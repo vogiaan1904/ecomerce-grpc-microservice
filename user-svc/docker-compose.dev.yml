@@ -1,6 +1,6 @@
 services:
   user_db:
-    container_name: ${DATBASE_HOST}
+    container_name: ${DATABASE_HOST}
     image: mongo:latest
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}

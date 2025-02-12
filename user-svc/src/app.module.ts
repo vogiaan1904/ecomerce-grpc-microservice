@@ -6,9 +6,37 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AddressService } from './modules/address/address.service';
 import { AddressModule } from './modules/address/address.module';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test', 'provision', 'staging')
+          .default('development'),
+        DATABASE_HOST: Joi.string(),
+        DATABASE_NAME: Joi.string(),
+        DATABASE_USERNAME: Joi.string(),
+        DATABASE_PASSWORD: Joi.string(),
+        DATABASE_PORT: Joi.number(),
+        DATABASE_URI: Joi.string(),
+        //...
+      }),
+      validationOptions: {
+        abortEarly: false,
+      },
+      isGlobal: true,
+      envFilePath:
+        process.env.NODE_ENV === 'development'
+          ? '.env.dev'
+          : process.env.NODE_ENV === 'test'
+            ? '.env.test'
+            : '.env',
+      // load: [databaseConfig],
+      cache: true,
+      expandVariables: true,
+    }),
     UserModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
