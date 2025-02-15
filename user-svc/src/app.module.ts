@@ -28,11 +28,7 @@ import * as Joi from 'joi';
       },
       isGlobal: true,
       envFilePath:
-        process.env.NODE_ENV === 'development'
-          ? '.env.dev'
-          : process.env.NODE_ENV === 'test'
-            ? '.env.test'
-            : '.env',
+        process.env.NODE_ENV === 'development' ? '.env' : '.env.prod',
       // load: [databaseConfig],
       cache: true,
       expandVariables: true,
@@ -40,10 +36,12 @@ import * as Joi from 'joi';
     UserModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DATABASE_URI'),
-        dbName: configService.get<string>('DATABASE_NAME'),
-      }),
+      useFactory: async (configService: ConfigService) => {
+        return {
+          uri: configService.get<string>('DATABASE_URI'),
+          dbName: configService.get<string>('DATABASE_NAME'),
+        };
+      },
       inject: [ConfigService],
     }),
     AddressModule,

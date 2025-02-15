@@ -9,14 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FindOneUserRequestDto = void 0;
+exports.FindUserByEmailRequestDto = exports.FindUserByIdRequestDto = void 0;
 const class_validator_1 = require("class-validator");
-class FindOneUserRequestDto {
+class FindUserByIdRequestDto {
 }
-exports.FindOneUserRequestDto = FindOneUserRequestDto;
+exports.FindUserByIdRequestDto = FindUserByIdRequestDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], FindOneUserRequestDto.prototype, "id", void 0);
+], FindUserByIdRequestDto.prototype, "id", void 0);
+class FindUserByEmailRequestDto {
+}
+exports.FindUserByEmailRequestDto = FindUserByEmailRequestDto;
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], FindUserByEmailRequestDto.prototype, "email", void 0);
 //# sourceMappingURL=find-one-user.request.dto.js.map

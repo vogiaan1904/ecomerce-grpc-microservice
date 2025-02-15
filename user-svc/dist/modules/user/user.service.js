@@ -17,6 +17,10 @@ let UserService = class UserService {
         const user = await this.repository.findById(id);
         return { status: common_1.HttpStatus.OK, error: null, data: user };
     }
+    async findByEmail({ email, }) {
+        const user = await this.repository.findOne(email);
+        return { status: common_1.HttpStatus.OK, error: null, data: user };
+    }
     async findAll(dto) {
         const { page, limit } = dto;
         try {

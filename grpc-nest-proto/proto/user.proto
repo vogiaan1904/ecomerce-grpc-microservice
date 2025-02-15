@@ -31,7 +31,6 @@ message UserData {
 }
 
 
-
 // CreateUser
 message CreateUserRequest {
   string email = 1;
@@ -49,7 +48,10 @@ message CreateUserResponse {
 
 // FindOne
 message FindOneRequest {
-  string id = 1;
+  oneof search_option {
+    string id = 1;
+    string email = 2;
+  }
 }
 
 message FindOneResponse {

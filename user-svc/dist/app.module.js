@@ -38,21 +38,19 @@ exports.AppModule = AppModule = __decorate([
                     abortEarly: false,
                 },
                 isGlobal: true,
-                envFilePath: process.env.NODE_ENV === 'development'
-                    ? '.env.dev'
-                    : process.env.NODE_ENV === 'test'
-                        ? '.env.test'
-                        : '.env',
+                envFilePath: process.env.NODE_ENV === 'development' ? '.env' : '.env.prod',
                 cache: true,
                 expandVariables: true,
             }),
             user_module_1.UserModule,
             mongoose_1.MongooseModule.forRootAsync({
                 imports: [config_1.ConfigModule],
-                useFactory: async (configService) => ({
-                    uri: configService.get('DATABASE_URI'),
-                    dbName: configService.get('DATABASE_NAME'),
-                }),
+                useFactory: async (configService) => {
+                    return {
+                        uri: configService.get('DATABASE_URI'),
+                        dbName: configService.get('DATABASE_NAME'),
+                    };
+                },
                 inject: [config_1.ConfigService],
             }),
             address_module_1.AddressModule,

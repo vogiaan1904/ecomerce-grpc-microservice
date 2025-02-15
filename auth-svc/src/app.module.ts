@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import Joi from 'joi';
+import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -12,8 +13,8 @@ import { AuthModule } from './auth/auth.module';
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test', 'provision', 'staging')
           .default('development'),
-        JWT_ACCESS_SECRET: Joi.string().required(),
-        JWT_REFRESH_SECRET: Joi.string().required(),
+        JWT_ACCESS_SECRET_KEY: Joi.string().required(),
+        JWT_REFRESH_SECRET_KEY: Joi.string().required(),
         //...
       }),
       validationOptions: {
@@ -25,8 +26,8 @@ import { AuthModule } from './auth/auth.module';
       cache: true,
       expandVariables: true,
     }),
-
     AuthModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -2,7 +2,6 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { User } from '../../entities/user.entity';
 import { UpdateUserProfileDto } from './dto';
 import { CreateUserRequestDto } from './dto/create-user.request.dto';
-import { FindOneUserRequestDto } from './dto/find-one-user.request.dto';
 import { UsersRepository } from './repositories/base/user.repo';
 import {
   CreateUserResponse,
@@ -11,6 +10,10 @@ import {
   FindOneResponse,
   UpdateUserResponse,
 } from './user.pb';
+import {
+  FindUserByEmailRequestDto,
+  FindUserByIdRequestDto,
+} from './dto/find-one-user.request.dto';
 
 @Injectable()
 export class UserService {
@@ -21,8 +24,15 @@ export class UserService {
     return { status: HttpStatus.CREATED, error: null, id: user.id };
   }
 
-  async findById({ id }: FindOneUserRequestDto): Promise<FindOneResponse> {
+  async findById({ id }: FindUserByIdRequestDto): Promise<FindOneResponse> {
     const user: User = await this.repository.findById(id);
+    return { status: HttpStatus.OK, error: null, data: user };
+  }
+
+  async findByEmail({
+    email,
+  }: FindUserByEmailRequestDto): Promise<FindOneResponse> {
+    const user: User = await this.repository.findOne(email);
     return { status: HttpStatus.OK, error: null, data: user };
   }
 
