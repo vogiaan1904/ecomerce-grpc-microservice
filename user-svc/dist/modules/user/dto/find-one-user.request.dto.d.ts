@@ -1,6 +1,4 @@
-export declare class FindUserByIdRequestDto {
-    id: string;
-}
-export declare class FindUserByEmailRequestDto {
-    email: string;
+export declare class FindOneRequestDto {
+    id?: string;
+    email?: string;
 }

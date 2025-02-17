@@ -47,7 +47,8 @@ export interface CreateUserResponse {
 
 /** FindOne */
 export interface FindOneRequest {
-  id: string;
+  id?: string | undefined;
+  email?: string | undefined;
 }
 
 export interface FindOneResponse {
@@ -100,7 +101,7 @@ export interface UserServiceClient {
 
   findOne(request: FindOneRequest): Observable<FindOneResponse>;
 
-  findAll(request: Observable<FindAllRequest>): Observable<FindAllResponse>;
+  findAll(request: FindAllRequest): Observable<FindAllResponse>;
 
   updateUser(request: UpdateUserRequest): Observable<UpdateUserResponse>;
 
@@ -114,7 +115,7 @@ export interface UserServiceController {
 
   findOne(request: FindOneRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
-  findAll(request: Observable<FindAllRequest>): Observable<FindAllResponse>;
+  findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
 
   updateUser(
     request: UpdateUserRequest,
@@ -127,12 +128,12 @@ export interface UserServiceController {
 
 export function UserServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["createUser", "findOne", "updateUser", "deleteUser"];
+    const grpcMethods: string[] = ["createUser", "findOne", "findAll", "updateUser", "deleteUser"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("UserService", method)(constructor.prototype[method], method, descriptor);
     }
-    const grpcStreamMethods: string[] = ["findAll"];
+    const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("UserService", method)(constructor.prototype[method], method, descriptor);

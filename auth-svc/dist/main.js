@@ -4,9 +4,9 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const microservices_1 = require("@nestjs/microservices");
 const common_1 = require("@nestjs/common");
-const auth_pb_1 = require("./auth/proto-buffers/auth.pb");
+const auth_pb_1 = require("./modules/auth/proto-buffers/auth.pb");
 const path_1 = require("path");
-const http_exception_filter_1 = require("./auth/filter/http-exception.filter");
+const http_exception_filter_1 = require("./modules/auth/filter/http-exception.filter");
 async function bootstrap() {
     const app = await core_1.NestFactory.createMicroservice(app_module_1.AppModule, {
         transport: microservices_1.Transport.GRPC,

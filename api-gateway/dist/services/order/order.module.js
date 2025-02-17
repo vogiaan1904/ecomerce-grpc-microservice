@@ -22,7 +22,7 @@ exports.OrderModule = OrderModule = __decorate([
                     name: order_pb_1.ORDER_SERVICE_NAME,
                     transport: microservices_1.Transport.GRPC,
                     options: {
-                        url: '0.0.0.0:50052',
+                        url: '0.0.0.0:50054',
                         package: order_pb_1.ORDER_PACKAGE_NAME,
                         protoPath: 'node_modules/grpc-nest-proto/proto/order.proto',
                     },

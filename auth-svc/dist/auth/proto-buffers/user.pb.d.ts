@@ -71,14 +71,14 @@ export declare const USER_PACKAGE_NAME = "user";
 export interface UserServiceClient {
     createUser(request: CreateUserRequest): Observable<CreateUserResponse>;
     findOne(request: FindOneRequest): Observable<FindOneResponse>;
-    findAll(request: Observable<FindAllRequest>): Observable<FindAllResponse>;
+    findAll(request: FindAllRequest): Observable<FindAllResponse>;
     updateUser(request: UpdateUserRequest): Observable<UpdateUserResponse>;
     deleteUser(request: DeleteUserRequest): Observable<DeleteUserResponse>;
 }
 export interface UserServiceController {
     createUser(request: CreateUserRequest): Promise<CreateUserResponse> | Observable<CreateUserResponse> | CreateUserResponse;
     findOne(request: FindOneRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
-    findAll(request: Observable<FindAllRequest>): Observable<FindAllResponse>;
+    findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
     updateUser(request: UpdateUserRequest): Promise<UpdateUserResponse> | Observable<UpdateUserResponse> | UpdateUserResponse;
     deleteUser(request: DeleteUserRequest): Promise<DeleteUserResponse> | Observable<DeleteUserResponse> | DeleteUserResponse;
 }

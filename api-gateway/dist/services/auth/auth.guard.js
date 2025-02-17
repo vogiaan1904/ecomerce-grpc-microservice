@@ -8,12 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 let AuthGuard = class AuthGuard {
-    constructor() { }
+    constructor(service) {
+        this.service = service;
+    }
     async canActivate(ctx) {
         const req = ctx.switchToHttp().getRequest();
         const authorization = req.headers['authorization'];
@@ -34,12 +39,9 @@ let AuthGuard = class AuthGuard {
     }
 };
 exports.AuthGuard = AuthGuard;
-__decorate([
-    (0, common_1.Inject)(auth_service_1.AuthService),
-    __metadata("design:type", auth_service_1.AuthService)
-], AuthGuard.prototype, "service", void 0);
 exports.AuthGuard = AuthGuard = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
+    __param(0, (0, common_1.Inject)(auth_service_1.AuthService)),
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthGuard);
 //# sourceMappingURL=auth.guard.js.map

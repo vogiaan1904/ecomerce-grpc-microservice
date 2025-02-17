@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ClientGrpc } from '@nestjs/microservices';
 import * as bcrypt from 'bcryptjs';
 import { firstValueFrom } from 'rxjs';
-import { TokenService } from 'src/token/token.service';
+import { TokenService } from 'src/modules/token/token.service';
 import { RegisterRequestDto, ValidateRequestDto } from './dto/auth-request.dto';
 import { TokenPayload } from './interfaces/token.interface';
 import { RegisterResponse, ValidateResponse } from './proto-buffers/auth.pb';
@@ -20,28 +20,27 @@ export class AuthService implements OnModuleInit {
   private readonly SALT_ROUND: number = 10;
   private userService: UserServiceClient;
 
-  @Inject(USER_SERVICE_NAME)
-  private readonly userServiceClient: ClientGrpc;
-
-  public onModuleInit(): void {
-    this.userService =
-      this.userServiceClient.getService<UserServiceClient>(USER_SERVICE_NAME);
-  }
   constructor(
+    @Inject(USER_SERVICE_NAME)
+    private userServiceClient: ClientGrpc,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly tokenService: TokenService,
   ) {}
 
+  public onModuleInit(): void {
+    this.userService =
+      this.userServiceClient.getService<UserServiceClient>(USER_SERVICE_NAME);
+  }
+
   async register(dto: RegisterRequestDto): Promise<RegisterResponse> {
     const { email, password, firstName, lastName, gender } = dto;
+
     const existingUserWithEmail: FindOneResponse = await firstValueFrom(
       this.userService.findOne({ email }),
     );
 
-    console.log(existingUserWithEmail);
-
-    if (existingUserWithEmail.status >= HttpStatus.NOT_FOUND) {
+    if (existingUserWithEmail.status == HttpStatus.OK) {
       return {
         status: HttpStatus.CONFLICT,
         error: ['Email already exists'],

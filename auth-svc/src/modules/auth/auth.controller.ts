@@ -9,8 +9,11 @@ export class AuthController {
   @Inject(AuthService)
   private readonly authService: AuthService;
 
-  @GrpcMethod(AUTH_SERVICE_NAME, 'register')
+  @GrpcMethod(AUTH_SERVICE_NAME, 'Register')
   private async register(dto: RegisterRequestDto): Promise<RegisterResponse> {
     return this.authService.register(dto);
   }
+
+  @GrpcMethod(AUTH_SERVICE_NAME, 'Validate')
+  async validate(token: string): Promise<any> {}
 }

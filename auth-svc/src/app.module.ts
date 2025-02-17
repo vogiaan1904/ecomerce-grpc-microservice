@@ -3,12 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { TokenModule } from './token/token.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { TokenModule } from './modules/token/token.module';
+import loggerConfig from './configs/logger.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      load: [loggerConfig],
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test', 'provision', 'staging')

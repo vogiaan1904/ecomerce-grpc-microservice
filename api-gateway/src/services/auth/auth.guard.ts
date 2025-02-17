@@ -12,9 +12,8 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  @Inject(AuthService)
-  public readonly service: AuthService;
-  constructor() {}
+  constructor(@Inject(AuthService) private readonly service: AuthService) {}
+
   public async canActivate(ctx: ExecutionContext): Promise<boolean> | never {
     const req: RequestWithUser = ctx.switchToHttp().getRequest();
     const authorization: string | undefined = req.headers['authorization'];

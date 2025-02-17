@@ -7,12 +7,12 @@ exports.protobufPackage = "user";
 exports.USER_PACKAGE_NAME = "user";
 function UserServiceControllerMethods() {
     return function (constructor) {
-        const grpcMethods = ["createUser", "findOne", "updateUser", "deleteUser"];
+        const grpcMethods = ["createUser", "findOne", "findAll", "updateUser", "deleteUser"];
         for (const method of grpcMethods) {
             const descriptor = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
             (0, microservices_1.GrpcMethod)("UserService", method)(constructor.prototype[method], method, descriptor);
         }
-        const grpcStreamMethods = ["findAll"];
+        const grpcStreamMethods = [];
         for (const method of grpcStreamMethods) {
             const descriptor = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
             (0, microservices_1.GrpcStreamMethod)("UserService", method)(constructor.prototype[method], method, descriptor);
