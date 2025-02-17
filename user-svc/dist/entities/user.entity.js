@@ -35,7 +35,6 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
-        select: false,
     }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);

@@ -9,15 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthController = void 0;
+exports.AuthController = exports.GrpcExceptionFilter = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const microservices_1 = require("@nestjs/microservices");
 const auth_pb_1 = require("./proto-buffers/auth.pb");
 const auth_request_dto_1 = require("./dto/auth-request.dto");
+const rxjs_1 = require("rxjs");
+let GrpcExceptionFilter = class GrpcExceptionFilter {
+    catch(exception, host) {
+        return (0, rxjs_1.throwError)(() => exception.getError());
+    }
+};
+exports.GrpcExceptionFilter = GrpcExceptionFilter;
+exports.GrpcExceptionFilter = GrpcExceptionFilter = __decorate([
+    (0, common_1.Catch)(microservices_1.RpcException)
+], GrpcExceptionFilter);
 let AuthController = class AuthController {
     async register(dto) {
         return this.authService.register(dto);
+    }
+    async login(dto) {
+        return this.authService.login(dto);
     }
     async validate(token) { }
 };
@@ -33,12 +46,19 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
 __decorate([
+    (0, microservices_1.GrpcMethod)(auth_pb_1.AUTH_SERVICE_NAME, 'Login'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_request_dto_1.LoginRequestDto]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "login", null);
+__decorate([
     (0, microservices_1.GrpcMethod)(auth_pb_1.AUTH_SERVICE_NAME, 'Validate'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "validate", null);
 exports.AuthController = AuthController = __decorate([
+    (0, common_1.UseFilters)(new GrpcExceptionFilter()),
     (0, common_1.Controller)('auth')
 ], AuthController);
 //# sourceMappingURL=auth.controller.js.map

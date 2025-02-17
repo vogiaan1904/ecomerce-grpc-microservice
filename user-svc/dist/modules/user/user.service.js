@@ -23,6 +23,13 @@ let UserService = class UserService {
     async findById({ id }) {
         try {
             const user = await this.repository.findById(id);
+            if (!user) {
+                return {
+                    status: common_1.HttpStatus.NOT_FOUND,
+                    error: ['User not found'],
+                    data: null,
+                };
+            }
             return { status: common_1.HttpStatus.OK, error: null, data: user };
         }
         catch (error) {
@@ -37,6 +44,13 @@ let UserService = class UserService {
     async findByEmail({ email }) {
         try {
             const user = await this.repository.findOne({ email });
+            if (!user) {
+                return {
+                    status: common_1.HttpStatus.NOT_FOUND,
+                    error: ['User not found'],
+                    data: null,
+                };
+            }
             return { status: common_1.HttpStatus.OK, error: null, data: user };
         }
         catch (error) {
@@ -49,7 +63,6 @@ let UserService = class UserService {
         }
     }
     async findAll(dto) {
-        console.log('user service called');
         const { page, limit } = dto;
         try {
             const users = await this.repository.findAllWithPagination({}, {

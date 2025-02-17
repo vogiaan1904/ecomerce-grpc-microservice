@@ -30,13 +30,13 @@ export class GrpcExceptionFilter implements RpcExceptionFilter<RpcException> {
   }
 }
 
+@UseFilters(GrpcExceptionFilter)
 @Controller('user')
 export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
 
   @GrpcMethod(USER_SERVICE_NAME, 'CreateUser')
-  @UseFilters(GrpcExceptionFilter)
   private async createUser(
     payload: CreateUserRequestDto,
   ): Promise<CreateUserResponse> {
@@ -44,9 +44,7 @@ export class UserController {
   }
 
   @GrpcMethod(USER_SERVICE_NAME, 'FindOne')
-  @UseFilters(GrpcExceptionFilter)
   private async findOne(payload: FindOneRequestDto): Promise<FindOneResponse> {
-    console.log('findOne controller called');
     if (payload.email) {
       return this.service.findByEmail(payload);
     }
@@ -56,13 +54,11 @@ export class UserController {
   }
 
   @GrpcMethod(USER_SERVICE_NAME, 'FindAll')
-  @UseFilters(GrpcExceptionFilter)
   private async findAll(payload: FindAllRequest): Promise<FindAllResponse> {
     return this.service.findAll(payload);
   }
 
   @GrpcMethod(USER_SERVICE_NAME, 'UpdateUser')
-  @UseFilters(GrpcExceptionFilter)
   private async updateUser(
     payload: UpdateUserProfileDto,
   ): Promise<UpdateUserResponse> {
@@ -70,7 +66,6 @@ export class UserController {
   }
 
   @GrpcMethod(USER_SERVICE_NAME, 'DeleteUser')
-  @UseFilters(GrpcExceptionFilter)
   private async deleteUser(
     payload: DeleteUserRequestDto,
   ): Promise<UpdateUserResponse> {

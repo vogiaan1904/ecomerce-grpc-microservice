@@ -55,7 +55,40 @@ let AuthService = class AuthService {
             error: response.error,
         };
     }
-    async validate({ token, }) {
+    async login(dto) {
+        const { email, password } = dto;
+        const userResponse = await (0, rxjs_1.firstValueFrom)(this.userService.findOne({ email }));
+        if (userResponse.status !== common_1.HttpStatus.OK) {
+            return {
+                status: common_1.HttpStatus.UNAUTHORIZED,
+                error: ['User not found'],
+                accessToken: null,
+                refreshToken: null,
+            };
+        }
+        const isValidPassword = await bcrypt.compare(password, userResponse.data.password);
+        if (!isValidPassword) {
+            return {
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: ['Email or password is incorrect'],
+                accessToken: null,
+                refreshToken: null,
+            };
+        }
+        const accessToken = this.generateAccessToken({
+            userId: userResponse.data.id,
+        });
+        const refreshToken = this.generateRefreshToken({
+            userId: userResponse.data.id,
+        });
+        return {
+            status: common_1.HttpStatus.OK,
+            error: null,
+            accessToken,
+            refreshToken,
+        };
+    }
+    async validate({ token }) {
         try {
             const secret = this.configService.get('JWT_ACCESS_SECRET_KEY');
             const decoded = await this.jwtService.verifyAsync(token, {
@@ -86,14 +119,14 @@ let AuthService = class AuthService {
         return this.jwtService.sign(payload, {
             algorithm: 'HS256',
             secret: this.configService.get('JWT_ACCESS_SECRET_KEY'),
-            expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}s`,
+            expiresIn: this.configService.get('JWT_ACCESS_EXPIRATION'),
         });
     }
     generateRefreshToken(payload) {
         return this.jwtService.sign(payload, {
             algorithm: 'HS256',
             secret: this.configService.get('JWT_REFRESH_SECRET_KEY'),
-            expiresIn: `${this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`,
+            expiresIn: this.configService.get('JWT_REFRESH_EXPIRATION'),
         });
     }
 };

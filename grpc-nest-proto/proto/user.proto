@@ -28,6 +28,7 @@ message UserData {
   string gender = 6;
   string avatar = 7;
   repeated Address addresses = 8;
+  string password = 9;
 }
 
 

@@ -17,6 +17,7 @@ export interface UserData {
     gender: string;
     avatar: string;
     addresses: Address[];
+    password: string;
 }
 export interface CreateUserRequest {
     email: string;

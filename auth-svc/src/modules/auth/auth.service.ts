@@ -5,9 +5,18 @@ import { ClientGrpc } from '@nestjs/microservices';
 import * as bcrypt from 'bcryptjs';
 import { firstValueFrom } from 'rxjs';
 import { TokenService } from 'src/modules/token/token.service';
-import { RegisterRequestDto, ValidateRequestDto } from './dto/auth-request.dto';
+import {
+  LoginRequestDto,
+  RegisterRequestDto,
+  ValidateRequestDto,
+} from './dto/auth-request.dto';
 import { TokenPayload } from './interfaces/token.interface';
-import { RegisterResponse, ValidateResponse } from './proto-buffers/auth.pb';
+import {
+  LoginRequest,
+  LoginResponse,
+  RegisterResponse,
+  ValidateResponse,
+} from './proto-buffers/auth.pb';
 import {
   CreateUserRequest,
   CreateUserResponse,
@@ -67,9 +76,51 @@ export class AuthService implements OnModuleInit {
     };
   }
 
-  public async validate({
-    token,
-  }: ValidateRequestDto): Promise<ValidateResponse> {
+  async login(dto: LoginRequest): Promise<LoginResponse> {
+    const { email, password } = dto;
+    const userResponse = await firstValueFrom(
+      this.userService.findOne({ email }),
+    );
+
+    if (userResponse.status !== HttpStatus.OK) {
+      return {
+        status: HttpStatus.UNAUTHORIZED,
+        error: ['User not found'],
+        accessToken: null,
+        refreshToken: null,
+      };
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      password,
+      userResponse.data.password,
+    );
+    if (!isValidPassword) {
+      return {
+        status: HttpStatus.BAD_REQUEST,
+        error: ['Email or password is incorrect'],
+        accessToken: null,
+        refreshToken: null,
+      };
+    }
+
+    const accessToken = this.generateAccessToken({
+      userId: userResponse.data.id,
+    });
+
+    const refreshToken = this.generateRefreshToken({
+      userId: userResponse.data.id,
+    });
+
+    return {
+      status: HttpStatus.OK,
+      error: null,
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async validate({ token }: ValidateRequestDto): Promise<ValidateResponse> {
     try {
       const secret = this.configService.get<string>('JWT_ACCESS_SECRET_KEY');
 
@@ -107,9 +158,7 @@ export class AuthService implements OnModuleInit {
     return this.jwtService.sign(payload, {
       algorithm: 'HS256',
       secret: this.configService.get<string>('JWT_ACCESS_SECRET_KEY'),
-      expiresIn: `${this.configService.get<string>(
-        'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
-      )}s`,
+      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRATION'),
     });
   }
 
@@ -117,11 +166,7 @@ export class AuthService implements OnModuleInit {
     return this.jwtService.sign(payload, {
       algorithm: 'HS256',
       secret: this.configService.get<string>('JWT_REFRESH_SECRET_KEY'),
-      expiresIn: `${this.configService.get<string>(
-        'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
-      )}s`,
+      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION'),
     });
   }
-
-  // async login(dto: LoginRequestDto): Promise<LoginResponse> {}
 }

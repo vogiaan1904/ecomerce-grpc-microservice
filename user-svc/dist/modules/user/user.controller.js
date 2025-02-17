@@ -32,7 +32,6 @@ let UserController = class UserController {
         return this.service.create(payload);
     }
     async findOne(payload) {
-        console.log('findOne controller called');
         if (payload.email) {
             return this.service.findByEmail(payload);
         }
@@ -57,40 +56,36 @@ __decorate([
 ], UserController.prototype, "service", void 0);
 __decorate([
     (0, microservices_1.GrpcMethod)(user_pb_1.USER_SERVICE_NAME, 'CreateUser'),
-    (0, common_1.UseFilters)(GrpcExceptionFilter),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateUserRequestDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
 __decorate([
     (0, microservices_1.GrpcMethod)(user_pb_1.USER_SERVICE_NAME, 'FindOne'),
-    (0, common_1.UseFilters)(GrpcExceptionFilter),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_one_user_request_dto_1.FindOneRequestDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findOne", null);
 __decorate([
     (0, microservices_1.GrpcMethod)(user_pb_1.USER_SERVICE_NAME, 'FindAll'),
-    (0, common_1.UseFilters)(GrpcExceptionFilter),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findAll", null);
 __decorate([
     (0, microservices_1.GrpcMethod)(user_pb_1.USER_SERVICE_NAME, 'UpdateUser'),
-    (0, common_1.UseFilters)(GrpcExceptionFilter),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.UpdateUserProfileDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUser", null);
 __decorate([
     (0, microservices_1.GrpcMethod)(user_pb_1.USER_SERVICE_NAME, 'DeleteUser'),
-    (0, common_1.UseFilters)(GrpcExceptionFilter),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [delete_user_request_dto_1.DeleteUserRequestDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
+    (0, common_1.UseFilters)(GrpcExceptionFilter),
     (0, common_1.Controller)('user')
 ], UserController);
 //# sourceMappingURL=user.controller.js.map

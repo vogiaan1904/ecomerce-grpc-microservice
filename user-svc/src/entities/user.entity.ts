@@ -29,7 +29,6 @@ export class User extends BaseEntity {
 
   @Prop({
     required: true,
-    select: false,
   })
   password: string;
 

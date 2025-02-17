@@ -26,6 +26,13 @@ export class UserService {
   async findById({ id }: FindOneRequest): Promise<FindOneResponse> {
     try {
       const user: User = await this.repository.findById(id);
+      if (!user) {
+        return {
+          status: HttpStatus.NOT_FOUND,
+          error: ['User not found'],
+          data: null,
+        };
+      }
       return { status: HttpStatus.OK, error: null, data: user };
     } catch (error) {
       console.error('Error in findById:', error);
@@ -40,6 +47,13 @@ export class UserService {
   async findByEmail({ email }: FindOneRequest): Promise<FindOneResponse> {
     try {
       const user: User = await this.repository.findOne({ email });
+      if (!user) {
+        return {
+          status: HttpStatus.NOT_FOUND,
+          error: ['User not found'],
+          data: null,
+        };
+      }
       return { status: HttpStatus.OK, error: null, data: user };
     } catch (error) {
       console.error('Error in findByEmail:', error);
@@ -52,7 +66,6 @@ export class UserService {
   }
 
   async findAll(dto: FindAllRequest): Promise<FindAllResponse> {
-    console.log('user service called');
     const { page, limit } = dto;
     try {
       const users = await this.repository.findAllWithPagination(
