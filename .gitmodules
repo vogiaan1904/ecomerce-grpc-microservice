@@ -1,0 +1,15 @@
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/vogiaan1904/api-gateway.git
+[submodule "user-svc"]
+	path = user-svc
+	url = https://github.com/vogiaan1904/user-svc.git
+[submodule "auth-svc"]
+	path = auth-svc
+	url = https://github.com/vogiaan1904/auth-svc.git
+[submodule "product-svc"]
+	path = product-svc
+	url = https://github.com/vogiaan1904/product-svc.git
+[submodule "order-svc"]
+	path = order-svc
+	url = https://github.com/vogiaan1904/order-svc.git
