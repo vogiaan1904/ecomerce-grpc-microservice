@@ -1,0 +1,3 @@
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/yourusername/api-gateway.git
