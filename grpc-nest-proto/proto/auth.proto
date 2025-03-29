@@ -44,6 +44,7 @@ message LoginResponse {
 // Refresh token
 message RefreshTokenRequest {
   string refreshToken = 1;
+  string userId = 2;
 }
 
 message RefreshTokenResponse {
@@ -93,4 +94,5 @@ message ValidateResponse {
   int32 status = 1;
   repeated string error = 2;
   string userId = 3;
+  string role = 4;
 }
