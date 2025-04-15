@@ -13,6 +13,38 @@ service AuthService {
   rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {}
 }
 
+enum ErrorCode {
+  OK = 0;
+
+  // Authentication errors (010100 - 010199)
+  INVALID_CREDENTIALS = 100100;
+  INVALID_TOKEN = 100101;
+  TOKEN_EXPIRED = 100102;
+  REFRESH_TOKEN_EXPIRED = 100103;
+  TOKEN_NOT_FOUND = 100104;
+  
+  // Registration errors (010200 - 010299)
+  EMAIL_ALREADY_EXISTS = 100200;
+  INVALID_EMAIL_FORMAT = 100201;
+  INVALID_PASSWORD_FORMAT = 100202;
+  REGISTRATION_FAILED = 100203;
+  
+  // Verification errors (010300 - 010399)
+  EMAIL_NOT_VERIFIED = 100300;
+  VERIFICATION_TOKEN_EXPIRED = 100301;
+  VERIFICATION_TOKEN_INVALID = 100302;
+  
+  // Password reset errors (010400 - 010499)
+  RESET_TOKEN_EXPIRED = 100400;
+  RESET_TOKEN_INVALID = 100401;
+  PASSWORD_RESET_FAILED = 100402;
+}
+
+message Error {
+  ErrorCode code = 1;
+  string message = 2;
+}
+
 // Register
 message RegisterRequest {
   reserved 5, 6, 7;
@@ -24,8 +56,7 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-  int32 status = 1;
-  repeated string error = 2;
+  Error error = 1;
 }
 
 // Login
@@ -35,10 +66,9 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  string accessToken = 3;
-  string refreshToken = 4;
+  Error error = 1;
+  string accessToken = 2;
+  string refreshToken = 3;
 }
 
 // Refresh token
@@ -48,10 +78,9 @@ message RefreshTokenRequest {
 }
 
 message RefreshTokenResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  string accessToken = 3;
-  string refreshToken = 4;
+  Error error = 1;
+  string accessToken = 2;
+  string refreshToken = 3;
 }
 
 // Send verification email
@@ -60,8 +89,7 @@ message SendVerificationEmailRequest {
 }
 
 message SendVerificationEmailResponse {
-  int32 status = 1;
-  repeated string error = 2;
+  Error error = 1;
 }
 
 // Forgot password
@@ -70,8 +98,7 @@ message ForgotPasswordRequest {
 }
 
 message ForgotPasswordResponse {
-  int32 status = 1;
-  repeated string error = 2;
+  Error error = 1;
 }
 
 // Reset password
@@ -81,8 +108,7 @@ message ResetPasswordRequest {
 }
 
 message ResetPasswordResponse {
-  int32 status = 1;
-  repeated string error = 2;
+  Error error = 1;
 }
 
 // Validate
@@ -91,8 +117,7 @@ message ValidateRequest {
 }
 
 message ValidateResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  string userId = 3;
-  string role = 4;
+  Error error = 1;
+  string userId = 2;
+  string role = 3;
 }

@@ -1,13 +1,31 @@
 syntax = "proto3";
 
 package user;
+import "google/protobuf/empty.proto";
 
 service UserService {
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
   rpc FindOne(FindOneRequest) returns (FindOneResponse) {}
-  rpc FindAll(FindAllRequest) returns (FindAllResponse) {}
+  rpc FindAll(google.protobuf.Empty) returns (FindAllResponse) {}
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+}
+
+enum ErrorCode {
+  OK = 0;
+
+  USER_NOT_FOUND = 200100;
+  USER_ALREADY_EXISTS = 200101;
+  INVALID_USER_DATA = 200102;
+  USER_DELETED = 200103;
+  USER_INACTIVE = 200104;
+  USER_SUSPENDED = 200105;
+  USER_BLOCKED = 200106;
+}
+
+message Error {
+  ErrorCode code = 1;
+  string message = 2;
 }
 
 message Address {
@@ -44,9 +62,8 @@ message CreateUserRequest {
 }
 
 message CreateUserResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  string id = 3;
+  Error error = 1;
+  string id = 2;
 }
 
 // FindOne
@@ -58,36 +75,27 @@ message FindOneRequest {
 }
 
 message FindOneResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  UserData data = 3;
+  Error error = 1;
+  UserData data = 2;
 }
 
 // FindAll
-message FindAllRequest {
-  int32 page = 1;
-  int32 limit = 2;
-}
-
 message FindAllResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  repeated UserData data = 3;
-  int32 total = 4;
+  Error error = 1;
+  repeated UserData data = 2;
 }
 
 // Update user
 message UpdateUserRequest {
   string id = 1;
-  string firstName = 3;
-  string lastName = 4;
-  string phoneNumber = 5;
-  string avatar = 6;
+  string firstName = 2;
+  string lastName = 3;
+  string phoneNumber = 4;
+  string avatar = 5;
 }
 
 message UpdateUserResponse {
-  int32 status = 1;
-  repeated string error = 2;
+  Error error = 1;
 }
 
 // Delete user
@@ -96,6 +104,5 @@ message DeleteUserRequest {
 }
 
 message DeleteUserResponse {
-  int32 status = 1;
-  repeated string error = 2;
+  Error error = 1;
 }
