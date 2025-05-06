@@ -17,3 +17,6 @@
 [submodule "protos"]
 	path = protos
 	url = https://github.com/vogiaan1904/e-commerce-grpc-nest-proto.git
+[submodule "payment-svc"]
+	path = payment-svc
+	url = https://github.com/vogiaan1904/payment-svc.git
