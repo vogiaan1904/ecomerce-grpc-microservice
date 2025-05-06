@@ -20,3 +20,6 @@
 [submodule "payment-svc"]
 	path = payment-svc
 	url = https://github.com/vogiaan1904/payment-svc.git
+[submodule "order-orchestrator"]
+	path = order-orchestrator
+	url = https://github.com/vogiaan1904/grpc-order-orchestrator.git
