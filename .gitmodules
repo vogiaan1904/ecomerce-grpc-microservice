@@ -1,25 +1,25 @@
 [submodule "api-gateway"]
 	path = api-gateway
-	url = https://github.com/vogiaan1904/api-gateway.git
+	url = https://github.com/vogiaan1904/grpc-api-gateway.git
 [submodule "user-svc"]
 	path = user-svc
-	url = https://github.com/vogiaan1904/user-svc.git
+	url = https://github.com/vogiaan1904/grpc-user-svc.git
 [submodule "auth-svc"]
 	path = auth-svc
-	url = https://github.com/vogiaan1904/auth-svc.git
+	url = https://github.com/vogiaan1904/grpc-auth-svc.git
 [submodule "product-svc"]
 	path = product-svc
-	url = https://github.com/vogiaan1904/product-svc.git
+	url = https://github.com/vogiaan1904/grpc-product-svc.git
 [submodule "order-svc"]
 	path = order-svc
-	url = https://github.com/vogiaan1904/order-svc.git
+	url = https://github.com/vogiaan1904/grpc-order-svc.git
 
 [submodule "protos"]
 	path = protos
 	url = https://github.com/vogiaan1904/e-commerce-grpc-nest-proto.git
 [submodule "payment-svc"]
 	path = payment-svc
-	url = https://github.com/vogiaan1904/payment-svc.git
+	url = https://github.com/vogiaan1904/grpc-payment-svc.git
 [submodule "order-orchestrator"]
 	path = order-orchestrator
 	url = https://github.com/vogiaan1904/grpc-order-orchestrator.git
