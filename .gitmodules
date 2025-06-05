@@ -1,9 +1,6 @@
 [submodule "user-svc"]
 	path = user-svc
 	url = https://github.com/vogiaan1904/grpc-user-svc.git
-[submodule "auth-svc"]
-	path = auth-svc
-	url = https://github.com/vogiaan1904/grpc-auth-svc.git
 [submodule "product-svc"]
 	path = product-svc
 	url = https://github.com/vogiaan1904/grpc-product-svc.git
@@ -23,3 +20,6 @@
 [submodule "api-gateway"]
 	path = api-gateway
 	url = https://github.com/vogiaan1904/grpc-api-gateway.git
+[submodule "auth-svc"]
+	path = auth-svc
+	url = https://github.com/vogiaan1904/grpc-auth-svc.git
