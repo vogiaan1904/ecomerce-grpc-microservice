@@ -20,3 +20,6 @@
 [submodule "order-orchestrator"]
 	path = order-orchestrator
 	url = https://github.com/vogiaan1904/grpc-order-orchestrator.git
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/vogiaan1904/grpc-api-gateway.git
