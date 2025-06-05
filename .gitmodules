@@ -1,6 +1,3 @@
-[submodule "api-gateway"]
-	path = api-gateway
-	url = https://github.com/vogiaan1904/grpc-api-gateway.git
 [submodule "user-svc"]
 	path = user-svc
 	url = https://github.com/vogiaan1904/grpc-user-svc.git
