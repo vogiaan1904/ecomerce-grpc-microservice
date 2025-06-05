@@ -7,7 +7,6 @@
 [submodule "order-svc"]
 	path = order-svc
 	url = https://github.com/vogiaan1904/grpc-order-svc.git
-
 [submodule "protos"]
 	path = protos
 	url = https://github.com/vogiaan1904/e-commerce-grpc-nest-proto.git
