@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api-gateway:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+    depends_on:
+      - auth-svc
+      - user-svc
+      - product-svc
+      - order-svc
+      - payment-svc
+      - order-orchestrator
+
+  auth-svc:
+    build:
+      context: ./auth-svc
+      dockerfile: Dockerfile
+    volumes:
+      - ./auth-svc:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+
+  user-svc:
+    build:
+      context: ./user-svc
+      dockerfile: Dockerfile
+    volumes:
+      - ./user-svc:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+
+  product-svc:
+    build:
+      context: ./product-svc
+      dockerfile: Dockerfile
+    volumes:
+      - ./product-svc:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+
+  order-svc:
+    build:
+      context: ./order-svc
+      dockerfile: Dockerfile
+    volumes:
+      - ./order-svc:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+
+  payment-svc:
+    build:
+      context: ./payment-svc
+      dockerfile: Dockerfile
+    volumes:
+      - ./payment-svc:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+
+  order-orchestrator:
+    build:
+      context: ./order-orchestrator
+      dockerfile: Dockerfile
+    volumes:
+      - ./order-orchestrator:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start:dev
+
+networks:
+  default:
+    driver: bridge
