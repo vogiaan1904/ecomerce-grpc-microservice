@@ -425,16 +425,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - [PostgreSQL](https://www.postgresql.org/) - Relational database
 - [Docker](https://www.docker.com/) - Containerization platform
 
-## 📞 Support
-
-For questions about this polyglot microservices architecture:
-
-- 📧 **Issues**: [GitHub Issues](https://github.com/vogiaan1904/nestjs-microservice/issues)
-- 📚 **Documentation**: Check service-specific READMEs
-- 💬 **Discussions**: Architecture and implementation questions
-
----
-
 **Built with ❤️ by [Vo Gia An](https://github.com/vogiaan1904)**
 
 *Demonstrating modern polyglot microservices with TypeScript, Golang, and Temporal*
