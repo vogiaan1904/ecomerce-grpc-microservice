@@ -125,108 +125,20 @@ This project demonstrates a **polyglot microservices architecture** where differ
 ### 🔥 Development Mode
 
 #### TypeScript Services
-```bash
-# API Gateway (Port 3000)
-cd api-gateway && npm run start:dev
-
-# Authentication Service (Port 50051)
-cd auth-svc && npm run start:dev
-
-# User Service (Port 50052)
-cd user-svc && npm run start:dev
-
-# Product Service (Port 50053)
-cd product-svc && npm run start:dev
-```
 
 #### Golang Services
-```bash
-# Order Service (Port 50054)
-cd order-svc && make run
-
-# Payment Service (Port 50055)
-cd payment-svc && make run
-
-# Order Orchestrator (Temporal Worker)
-cd order-orchestrator && make run
-```
 
 ## 📁 Project Structure
-
-```
-nestjs-microservice/
-├── 🐹 **Golang Services**
-│   ├── 📁 order-svc/              # Order management service
-│   │   ├── 📁 cmd/server/          # Main application entry
-│   │   ├── 📁 internal/            # Business logic & handlers
-│   │   ├── 📁 config/              # Configuration management
-│   │   ├── 📁 pkg/                 # Shared packages
-│   │   ├── 📄 go.mod               # Go module definition
-│   │   └── 📄 Makefile             # Build automation
-│   ├── 📁 payment-svc/            # Payment processing service
-│   │   ├── 📁 cmd/grpc/            # gRPC server
-│   │   ├── 📁 cmd/http/            # HTTP server (webhooks)
-│   │   ├── 📁 internal/services/   # Payment gateways
-│   │   └── 📄 go.mod               # Go dependencies
-│   └── 📁 order-orchestrator/     # Temporal workflow orchestrator
-│       ├── 📁 internal/workflows/  # Temporal workflows
-│       ├── 📁 internal/activities/ # Temporal activities
-│       └── 📄 go.mod               # Temporal dependencies
-├── 📜 **TypeScript Services**
-│   ├── 📁 api-gateway/             # HTTP/REST API gateway
-│   ├── 📁 auth-svc/               # Authentication service
-│   ├── 📁 user-svc/               # User management service
-│   └── 📁 product-svc/            # Product catalog service
-├── 🔌 **Shared Protocol Definitions**
-│   └── 📁 protos/proto/            # gRPC service contracts
-│       ├── 📄 auth.proto           # Authentication service
-│       ├── 📄 user.proto           # User service
-│       ├── 📄 product.proto        # Product service
-│       ├── 📄 order.proto          # Order service
-│       └── 📄 payment.proto        # Payment service
-├── 🐳 **Infrastructure**
-│   ├── 📄 docker-compose.dev.yml   # Development environment
-│   └── 📄 .gitmodules              # Git submodules for protos
-└── 📄 LICENSE                      # MIT License
-```
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
 #### TypeScript Services
-```bash
-# API Gateway
-PORT=3000
-NODE_ENV=development
-
-# Authentication Service
-JWT_SECRET=your-jwt-secret
-JWT_EXPIRES_IN=7d
-DATABASE_URL=postgresql://user:password@localhost:5432/auth_db
-```
 
 #### Golang Services
-```bash
-# Order Service
-PORT=50054
-DATABASE_URI=mongodb://localhost:27018
-DATABASE_NAME=order_db
-TEMPORAL_HOST_PORT=localhost:7233
-
-# Payment Service  
-PORT=50055
-ZALOPAY_APP_ID=your-app-id
-ZALOPAY_KEY1=your-key1
-ZALOPAY_KEY2=your-key2
-```
 
 ### Temporal Configuration
-```bash
-# Temporal Server
-TEMPORAL_HOST_PORT=localhost:7233
-TEMPORAL_NAMESPACE=default
-```
 
 ## 🌊 Workflow Orchestration with Temporal
 
@@ -262,20 +174,8 @@ func (a *ProductActivities) ReleaseInventory(ctx context.Context, items []*Order
 ## 🧪 Testing
 
 ### TypeScript Services
-```bash
-# Run tests for NestJS services
-cd api-gateway && npm run test
-cd auth-svc && npm run test:e2e
-cd user-svc && npm run test:cov
-```
 
 ### Golang Services
-```bash
-# Run tests for Go services
-cd order-svc && make test
-cd payment-svc && go test ./...
-cd order-orchestrator && go test ./internal/...
-```
 
 ## 🚀 Deployment
 
@@ -289,14 +189,6 @@ docker-compose -f docker-compose.prod.yml up -d
 ```
 
 ### Individual Service Deployment
-```bash
-# Build TypeScript services
-cd api-gateway && docker build -t api-gateway .
-
-# Build Golang services
-cd order-svc && docker build -t order-svc .
-cd payment-svc && docker build -t payment-svc .
-```
 
 ## 📊 Service Communication
 
@@ -376,45 +268,11 @@ WORKFLOW: ProcessPostPaymentOrder
 7. **Payment Webhook** triggers post-payment workflow
 8. **Order Service** updates status to completed
 
-## 🤝 Contributing
-
-We welcome contributions to this polyglot microservices project!
-
-### Development Setup
-
-1. **Fork the repository**
-2. **Set up development environment**:
-   ```bash
-   # Install Node.js dependencies
-   cd api-gateway && npm install
-   
-   # Install Go dependencies  
-   cd order-svc && go mod download
-   ```
-3. **Create feature branch**: `git checkout -b feature/amazing-feature`
-4. **Test across languages**:
-   ```bash
-   # Test TypeScript services
-   npm run test
-   
-   # Test Go services
-   make test
-   ```
-5. **Submit Pull Request**
-
-### Contribution Guidelines
-
-- Follow language-specific conventions (ESLint for TS, gofmt for Go)
-- Update Protocol Buffer definitions when changing service contracts
-- Test both TypeScript and Golang components
-- Update documentation for architecture changes
-- Ensure Temporal workflows are properly tested
-
 ## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [NestJS](https://nestjs.com/) - Progressive Node.js framework
 - [Golang](https://golang.org/) - High-performance systems language
@@ -425,6 +283,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - [PostgreSQL](https://www.postgresql.org/) - Relational database
 - [Docker](https://www.docker.com/) - Containerization platform
 
-**Built with ❤️ by [Vo Gia An](https://github.com/vogiaan1904)**
+**Built by [Vo Gia An](https://github.com/vogiaan1904)**
 
 *Demonstrating modern polyglot microservices with TypeScript, Golang, and Temporal*
