@@ -64,7 +64,6 @@ This project demonstrates a **polyglot microservices architecture** where differ
 - ✅ **Database per Service**: Service-specific data storage strategies
 - ✅ **Event-Driven Architecture**: Temporal workflow events and activities
 - ✅ **Circuit Breaker**: Fault tolerance and resilience
-- ✅ **CQRS**: Command Query Responsibility Segregation
 
 ### 🔧 **Technical Features**
 - ✅ **gRPC Communication**: High-performance inter-service communication
